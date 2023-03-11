@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row, Avatar, Card } from "antd";
 import {
+  DeleteFilled,
   EditOutlined,
   EllipsisOutlined,
+  GlobalOutlined,
+  HeartFilled,
+  HeartOutlined,
   MailOutlined,
+  PhoneOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import CardCoverImage from "./CardCoverImage";
 import Paragraph from "antd/es/skeleton/Paragraph";
+import "../css/style.css";
 const { Meta } = Card;
 
-const CardComponent = ({ comp }) => {
+const CardComponent = ({ comp, deleteUserHandler }) => {
+  const [like, setLike] = useState(false);
+  const [userId, setUserId] = useState("");
+
+  const likeToggleHandler = (id) => {
+    setLike(true);
+    setUserId(id);
+  };
+
+  const unLikeToggleHandler = () => {
+    setLike(false);
+    setUserId("");
+  };
+
   return (
     <Col
       key={comp.id}
@@ -22,21 +41,41 @@ const CardComponent = ({ comp }) => {
       xl={6}
     >
       <Card
-        style={{
-          margin: "15px",
-        }}
-        cover={<CardCoverImage comp={comp} />}
+        cover={<CardCoverImage comp={comp} className="cover_image" />}
         actions={[
-          <SettingOutlined key="setting" />,
-          <EditOutlined key="edit" />,
-          <EllipsisOutlined key="ellipsis" />,
+          userId !== comp.id ? (
+            <HeartOutlined
+              className="like_btn card-footer_icon"
+              onClick={() => likeToggleHandler(comp.id)}
+            />
+          ) : (
+            <HeartFilled
+              className="like_btn card-footer_icon"
+              onClick={unLikeToggleHandler}
+            />
+          ),
+          <DeleteFilled
+            className="card-footer_icon"
+            onClick={() => deleteUserHandler(comp.id)}
+          />,
         ]}
+        className="card_container"
       >
-        <Meta
-          //   avatar={<Avatar src="https://joesch.moe/api/v1/random" />}
-          title="Card title"
-          description="This is the description"
-        />
+        <div className="card-body">
+          <h3 className="mt-0">{comp.name}</h3>
+          <div>
+            <span className="card-body_icon">{<MailOutlined />}</span>
+            <span className="ml-10">{comp.email}</span>
+          </div>
+          <div>
+            <span className="card-body_icon">{<PhoneOutlined />}</span>
+            <span className="ml-10">{comp.phone}</span>
+          </div>
+          <div>
+            <span className="card-body_icon">{<GlobalOutlined />}</span>
+            <span className="ml-10">{comp.website}</span>
+          </div>
+        </div>
       </Card>
     </Col>
   );

@@ -17,10 +17,18 @@ const UserCard = () => {
     getUsers().then((res) => setUsers(res));
   }, []);
 
+  const deleteUserHandler = (id) => {
+    const data = users.filter((item, index) => item.id !== id);
+    setUsers(data);
+    console.log("data", data);
+  };
+
   return (
     <Row>
       {users.map((comp, index) => {
-        return <CardComponent comp={comp} />;
+        return (
+          <CardComponent comp={comp} deleteUserHandler={deleteUserHandler} />
+        );
       })}
     </Row>
   );
