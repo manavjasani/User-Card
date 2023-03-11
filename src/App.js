@@ -1,5 +1,6 @@
 import "./App.css";
 import UserCard from "./pages/User-Card";
+import "../src/css/style.css";
 
 function App() {
   return (

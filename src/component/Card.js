@@ -1,32 +1,17 @@
 import React, { useState } from "react";
-import { Col, Row, Avatar, Card } from "antd";
-import {
-  DeleteFilled,
-  EditOutlined,
-  EllipsisOutlined,
-  GlobalOutlined,
-  HeartFilled,
-  HeartOutlined,
-  MailOutlined,
-  PhoneOutlined,
-  SettingOutlined,
-} from "@ant-design/icons";
+import { Col, Card } from "antd";
+import { DeleteFilled, HeartFilled, HeartOutlined } from "@ant-design/icons";
 import CardCoverImage from "./CardCoverImage";
-import Paragraph from "antd/es/skeleton/Paragraph";
-import "../css/style.css";
-const { Meta } = Card;
+import CardBody from "./CardBody";
 
 const CardComponent = ({ comp, deleteUserHandler }) => {
-  const [like, setLike] = useState(false);
   const [userId, setUserId] = useState("");
 
   const likeToggleHandler = (id) => {
-    setLike(true);
     setUserId(id);
   };
 
   const unLikeToggleHandler = () => {
-    setLike(false);
     setUserId("");
   };
 
@@ -61,21 +46,7 @@ const CardComponent = ({ comp, deleteUserHandler }) => {
         ]}
         className="card_container"
       >
-        <div className="card-body">
-          <h3 className="mt-0">{comp.name}</h3>
-          <div>
-            <span className="card-body_icon">{<MailOutlined />}</span>
-            <span className="ml-10">{comp.email}</span>
-          </div>
-          <div>
-            <span className="card-body_icon">{<PhoneOutlined />}</span>
-            <span className="ml-10">{comp.phone}</span>
-          </div>
-          <div>
-            <span className="card-body_icon">{<GlobalOutlined />}</span>
-            <span className="ml-10">{comp.website}</span>
-          </div>
-        </div>
+        <CardBody comp={comp} />
       </Card>
     </Col>
   );
